@@ -72,7 +72,7 @@ CHIP CPU {
             zr=zerop, 
             ng=negp);
     Or(a=zerop, b=negp, out=lteq);
-    Not(in=lteq, out=posp);
+    Not(in=lteq, out=gt);
     Mux16(a=instruction, b=aluOut, sel=cType, out=aMuxOut);
     Mux16(a=aRegOut, b=inM, sel=cAorM, out=yIn);
     
@@ -83,7 +83,7 @@ CHIP CPU {
 
     And(a=cJEQ, b=zerop, out=JEQ);
     And(a=cJLT, b=negp, out=JLT);
-    And(a=cJGT, b=posp, out=JGT);
+    And(a=cJGT, b=gt, out=JGT);
     Or(a=JEQ, b=JLT, out=JLE);
     Or(a=JLE, b=JGT, out=jump);
     PC(in=aRegOut, load=jump, inc=true, reset=reset, out[0..14]=pc, out[15]= false);
