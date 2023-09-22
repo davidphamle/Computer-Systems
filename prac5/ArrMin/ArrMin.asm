@@ -3,58 +3,72 @@
 
 // Put your code here.
 
-
-// Initialize R0 with the first array element
 @R1
-A = M
-D = M
-@R0
-M = D
-
-// Initialize counter R3 to R1 (starting index)
-@R1
-D = M
-@R3
-M = D
-
-// Start of loop
-(LOOP)
-// Check if R3 is equal to R1+R2 (one past the last element)
-@R3
-D = M
-@R1
-D = D - M  // D = R3 - R1
+D=M-1
 @R2
-D = D - M  // D = R3 - R1 - R2
-@END
-D;JEQ
+M=M+D
 
-// Get the element at RAM[R3]
-@R3
-A = M
-D = M
-
-// Compare with R0 and update R0 if the element is smaller
+@32767
+D=A
 @R0
-D = D - M
-@UPDATE_MIN
-D;JLT  // changed JGT to JLT to update the min if the element is smaller
+M=D
 
-// Increment R3 and jump back to the loop
-@R3
-M = M + 1
+(LOOP)
+(CHECK_TERMINATE)
+@R1
+D=M
+@R2
+D=D-M
+@END
+D;JGT
+@R1
+A=M
+D=M
+@ELEM_POS
+D;JGE
+@ELEM_NEG
+0;JMP
+(UPDATE)
+@R1
+A=M
+D=M
+@R0
+M=D
+(SKIP)
+@R1
+M=M+1
 @LOOP
 0;JMP
-
-// Update minimum value in R0
-(UPDATE_MIN)
-@R3
-A = M
-D = M
-@R0
-M = D
-
-// End of program
 (END)
 @END
+0;JMP
+
+(R0_NEG)
+
+(R0_POS)
+// subs
+@R1
+A=M
+D=M
+@R0
+D=D-M // substraction, may cause Overflow!
+@SKIP
+D;JGE
+@UPDATE
+0;JMP
+
+(ELEM_NEG)
+@R0
+D=M
+@R0_NEG
+D;JLT
+@UPDATE
+0;JMP
+
+(ELEM_POS)
+@R0
+D=M
+@R0_POS
+D;JGE
+@SKIP
 0;JMP

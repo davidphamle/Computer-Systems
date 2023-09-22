@@ -1,10 +1,15 @@
-@R1
-D=M-1
-@R2
-M=M+D 
+// Sorts the array of length R2 whose first element is at RAM[R1] in ascending order in place. Sets R0 to True (-1) when complete.
+// (R0, R1, R2 refer to RAM[0], RAM[1], and RAM[2], respectively.)
+
+// Put your code here.
+
+// Initialize R1 and R2 based on test setup
+@R1 // the address of arr[0]
+D=M-1 // subtract 1 because the array starts from arr[0]
+@R2 // the length
+M=M+D // now R2 is the address of the last element
 
 (OUTER_LOOP)
-(CHECK_TERMINATE)
 @R1
 D=M
 @R2
@@ -13,26 +18,27 @@ D=D-M
 D;JGT
 @R1
 D=M
-@R3
+@R3 // use R3 as the index of the inner loop.
 M=D+1 
 
-
 (INNER_LOOP)
-(CHECK_INNER_END)
 @R3
 D=M
 @R2
 D=D-M
 @INNER_FINISH
 D;JGT
-@R3
+@R3 // use inner index to locate the element.
 A=M
-D=M
-@ELEM_POS
+D=M // now D contains the element pointed by the inner index.
+
+@R1
+A=M
+D=D-M // compare with the outer index
+@SKIP
 D;JGE
-@ELEM_NEG
-0;JMP
-(SWAP)
+
+// Swap the elements
 @R1
 A=M
 D=M
@@ -49,6 +55,7 @@ D=M
 @R3
 A=M
 M=D
+
 (SKIP)
 @R3
 M=M+1
@@ -63,40 +70,7 @@ M=M+1
 
 (FINISH)
 @R0
-M=-1
+M=-1 // Set R0 to True (-1) when complete
 (END)
 @END
-0;JMP
-
-(REF_NEG)
-
-(REF_POS)
-// subs
-@R3
-A=M
-D=M
-@R1
-A=M
-D=D-M
-@SKIP
-D;JGE
-@SWAP
-0;JMP
-
-(ELEM_NEG)
-@R1
-A=M
-D=M
-@REF_NEG
-D;JLT
-@SWAP
-0;JMP
-
-(ELEM_POS)
-@R1
-A=M
-D=M
-@REF_POS
-D;JGE
-@SKIP
 0;JMP
