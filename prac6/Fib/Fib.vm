@@ -2,4 +2,47 @@
 // n is supplied as an argument
 
 // Put your code here.
+function Fib.fib 0
+// base case n = 0
+push argument 0
+push constant 0
+eq
+if-goto Return_Zero
+goto Continue
 
+label Return_Zero
+push constant 0
+return
+
+label Continue
+// base case n = 1
+push argument 0 
+push constant 1
+eq
+if-goto Return_One
+goto Recursive
+
+label Return_One
+push constant 1
+return
+
+label Recursive
+// so fibs(n) = fibs(n-1) + fibs(n-2)
+// calculate fibs(n-1)
+push argument 0
+push constant 1
+sub
+call Fib.fib 1
+pop temp 0
+
+// calculate fibs(n-2)
+push argument 0
+push constant 2
+sub
+call Fib.fib 1
+pop temp 1
+
+push temp 0
+push temp 1
+add 
+return 

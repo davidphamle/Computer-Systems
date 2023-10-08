@@ -2,41 +2,103 @@
 // a is a local variable
 // x & y are static variables
 
-// Put your code here.
+// Set a to 0
 push constant 0
 pop local 0
+
+
+// check if x = 0
+push static 0
+push constant 0
+eq
+if-goto END
+
+// check if y = 0
+push static 1
+push constant 0
+eq
+if-goto END
 
 // Copy x to static 3
 push static 0
 pop static 3
 
-// check if x = 0
-label LOOP_START
+// Copy y to static 4
+push static 1
+pop static 4
+
+// Check and convert if x negative
 push static 3
 push constant 0
-eq
-if-goto LOOP_END
+lt
+if-goto X_negative
+goto CHECK_Y_Negative
 
-// check if y = 0
-push static 1
+label X_negative // Negate x
+push static 3
+neg 
+pop static 3
+
+// Check and convert if y negative
+label CHECK_Y_Negative
+push static 4
+push constant 0
+lt
+if-goto Y_negative
+goto LOOP_START
+
+label Y_negative // Negate y
+push static 4
+neg 
+pop static 4
+
+// check if y decrement in loop to 0
+label LOOP_START
+push static 4
 push constant 0
 eq
 if-goto LOOP_END
 
 // add x to a
 push local 0
-push static 1
+push static 3
 add
 pop local 0
 
-// check counter in static 3
-push static 3
+// check counter in static 4
+push static 4
 push constant 1
 sub
-pop static 3
+pop static 4
 
 goto LOOP_START
 label LOOP_END
+
+// check sign of x
+push static 0
+push constant 0
+lt
+if-goto CHECK_XY
+goto CHECK_Y
+
+label CHECK_XY
+push static 1
+push constant 0
+lt
+if-goto END
+push local 0
+neg
+pop local 0
+goto END
+
+label CHECK_Y
+push static 1
+push constant 0
+gt 
+if-goto END
+push local 0
+neg
+pop local 0
 
 label END
 goto END
