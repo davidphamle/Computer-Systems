@@ -33,16 +33,13 @@ push argument 0
 push constant 1
 sub
 call Fib.fib 1
-pop temp 0
 
 // calculate fibs(n-2)
 push argument 0
 push constant 2
 sub
 call Fib.fib 1
-pop temp 1
 
-push temp 0
-push temp 1
-add 
-return 
+add
+return
+
