@@ -2,4 +2,57 @@
 // a & b are both supplied as arguments
 
 // Put your code here.
+function ArrMax.arrMax 1
+// initiate the smallest possible number in temp
+push constant 32767
+neg
+pop temp 0
+
+// set the base address for that 
+push argument 0
+pop pointer 1
+
+label LOOP-START
+// If n <= 0, end the loop
+push argument 1
+push constant 0
+sub
+push constant 0
+eq
+if-goto LOOP_END
+
+push argument 1
+push constant 0
+lt
+if-goto LOOP_END
+
+// Compare array[i] with max value
+push that 0  // Load array[i]
+push local 0 // Load max
+gt          // Check if array[i] > max
+if-goto UPDATE_MAX
+goto CONTINUE_LOOP
+
+label UPDATE_MAX
+push that 0
+pop local 0
+
+label CONTINUE_LOOP
+// increment the base address for 'that'
+push pointer 1
+push constant 1
+add
+pop pointer 1
+
+// decrement n
+push argument 1
+push constant 1
+sub
+pop argument 1
+
+goto LOOP-START
+label LOOP_END
+
+push local 0
+return 
 
