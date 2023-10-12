@@ -1,0 +1,3 @@
+// POPTest01 - Test pop constant
+push constant 10
+pop local 2
