@@ -8,12 +8,34 @@ class VMTranslator:
             asm_code += f"@{offset}\n"
             asm_code += "D=A\n"
         elif segment == "local":
-            asm_code += f"@{offset}\n"
-            asm_code += "D=A\n@LCL\nA=M+D\nD=M\n"
+            asm_code += "@LCL\nD=M\n"  
+            asm_code += f"@{offset}\nD=D+A\n"  
+            asm_code += "A=D\nD=M\n" 
+
         elif segment == "argument":
-            asm_code += f"@{offset}\n"
-            asm_code += "D=A\n@ARG\nA=M+D\nD=M\n"
-        # Common code for all segments to push D register to stack
+            asm_code += "@ARG\nD=M\n" 
+            asm_code += f"@{offset}\nD=D+A\n" 
+            asm_code += "A=D\nD=M\n" 
+            
+        elif segment == "this":
+            asm_code += "@THIS\nD=M\n"
+            asm_code += f"@{offset}\nD=D+A\n"
+            asm_code += "A=D\nD=M\n"
+        
+        elif segment == "that":
+            asm_code += "@THAT\nD=M\n"
+            asm_code += f"@{offset}\nD=D+A\n"
+            asm_code += "A=D\nD=M\n"
+            
+        elif segment == "temp":
+            asm_code += f"@{5 + offset}\nD=M\n"
+            
+        elif segment == "static":
+            asm_code += f"@filename.{offset}\nD=M\n"
+
+        elif segment == "pointer":
+            asm_code += f"@{'THIS' if offset == 0 else 'THAT'}\nD=M\n"
+        # push D register to stack
         asm_code += "@SP\nAM=M+1\nA=A-1\nM=D\n"
         return asm_code
 
@@ -21,14 +43,25 @@ class VMTranslator:
         '''Generate Hack Assembly code for a VM pop operation'''
         asm_code = ""
         if segment == "local":
-            asm_code += f"@{offset}\n"
-            asm_code += "D=A\n@LCL\nD=M+D\n@R13\nM=D\n" 
+            asm_code += f"@{offset}\nD=A\n@LCL\nD=M+D\n@R13\nM=D\n" 
         elif segment == "argument":
-            asm_code += f"@{offset}\n"
-            asm_code += "D=A\n@ARG\nD=M+D\n@R13\nM=D\n"
-        # Common code for all segments to pop stack into D register
-        asm_code += "@SP\nAM=M-1\nD=M\n@16\nM=D\n"
-        return asm_code
+            asm_code += f"@{offset}\nD=A\n@ARG\nD=M+D\n@R13\nM=D\n"  
+        elif segment == "this":
+            asm_code += f"@{offset}\nD=A\n@THIS\nD=M+D\n@R13\nM=D\n" 
+        elif segment == "that":
+            asm_code += f"@{offset}\nD=A\n@THAT\nD=M+D\n@R13\nM=D\n" 
+        elif segment == "temp":
+            asm_code += f"@{offset}\nD=A\n@5\nD=A+D\n@R13\nM=D\n" 
+        elif segment == "static":
+            asm_code += f"@{16+offset}\nD=A\n@R13\nM=D\n" 
+        elif segment == "pointer":
+            asm_code += f"@{3+offset}\nD=A\n@R13\nM=D\n" 
+
+        # pop from stack into D
+        asm_code += "@SP\nAM=M-1\nD=M\n"
+
+        # store D into the address previously computed (in R13)
+        asm_code += "@R13\nA=M\nM=D\n"
 
     def vm_add():
         '''Generate Hack Assembly code for a VM add operation'''
