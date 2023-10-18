@@ -1,0 +1,7 @@
+// POPTest02 - Test pop temp, static, pointer
+push constant 10
+pop temp 0
+push constant 20
+pop static 0
+push constant 30
+pop pointer 0

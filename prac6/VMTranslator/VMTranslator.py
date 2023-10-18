@@ -56,12 +56,13 @@ class VMTranslator:
             asm_code += f"@{16+offset}\nD=A\n@R13\nM=D\n" 
         elif segment == "pointer":
             asm_code += f"@{3+offset}\nD=A\n@R13\nM=D\n" 
-
+        
         # pop from stack into D
         asm_code += "@SP\nAM=M-1\nD=M\n"
 
         # store D into the address previously computed (in R13)
         asm_code += "@R13\nA=M\nM=D\n"
+        return asm_code
 
     def vm_add():
         '''Generate Hack Assembly code for a VM add operation'''
@@ -80,7 +81,31 @@ class VMTranslator:
 
     def vm_eq():
         '''Generate Hack Assembly code for a VM eq operation'''
-        asm_code = "@SP\nAM=M-1\nD=M\n@SP\nA=M-1\nD=M-D\n@TRUE\nD;JEQ\n@SP\nA=M-1\nM=0\n@CONTINUE\n0;JMP\n(TRUE)\n@SP\nA=M-1\nM=-1\n(CONTINUE)\n"
+        label_true = f"TRUE{VMTranslator.call_counter}"
+        label_continue = f"CONTINUE{VMTranslator.call_counter}"
+        VMTranslator.call_counter += 1  # Increment the counter
+
+        asm_code = (
+            "@SP\n"
+            "AM=M-1\n"
+            "D=M\n"
+            "@SP\n"
+            "A=M-1\n"
+            "D=M-D\n"
+            f"@{label_true}\n"
+            "D;JEQ\n"
+            "@SP\n"
+            "A=M-1\n"
+            "M=0\n"
+            f"@{label_continue}\n"
+            "0;JMP\n"
+            f"({label_true})\n"
+            "@SP\n"
+            "A=M-1\n"
+            "M=-1\n"
+            f"({label_continue})\n"
+        )
+
         return asm_code
 
     def vm_gt():

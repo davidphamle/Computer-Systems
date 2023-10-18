@@ -1,3 +1,9 @@
-// POPTest01 - Test pop constant
+// POPTest01 - Test pop local, arg, this, that
 push constant 10
 pop local 2
+push constant 20
+pop argument 1
+push constant 30
+pop this 0
+push constant 40
+pop that 1

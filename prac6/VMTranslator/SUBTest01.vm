@@ -1,0 +1,4 @@
+// SubTest01 - Test subtraction
+push constant 10
+push constant 20
+sub

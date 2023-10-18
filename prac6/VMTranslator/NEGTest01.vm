@@ -1,0 +1,3 @@
+//NEGTest01 - Test negate
+push constant 10
+neg
