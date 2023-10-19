@@ -1,0 +1,4 @@
+//GTGTest01 - Test greater than
+push constant 20
+push constant 10
+gt

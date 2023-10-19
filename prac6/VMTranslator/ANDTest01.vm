@@ -1,0 +1,4 @@
+//ANDTest01 - Test greater than
+push constant 2
+push constant 3
+and

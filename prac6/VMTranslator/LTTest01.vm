@@ -1,0 +1,4 @@
+//LTGTest01 - Test less than
+push constant 10
+push constant 20
+lt

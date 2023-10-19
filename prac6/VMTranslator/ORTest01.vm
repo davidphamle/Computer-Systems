@@ -1,0 +1,4 @@
+//ANDTest01 - Test AND
+push constant 2
+push constant 3
+or

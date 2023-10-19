@@ -1,0 +1,11 @@
+// LABELTest01 - Basic Conditional Jump
+
+push constant 1
+// If the top of the stack is not 0, go to NOT_ZERO
+if-goto NOT_ZERO
+// Push 0 to stack
+push constant 0
+// Label for not zero
+label NOT_ZERO
+// Push 2 to stack
+push constant 2
