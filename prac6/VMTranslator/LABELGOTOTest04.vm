@@ -1,5 +1,44 @@
-// LABELTest01
+// LABELTest04
+// Initialize outer counter at 5
 push constant 5
-push constant 10
-add
-label LOOP_START
+pop local 0  // Pop the initial value into the local variable
+
+// Label for the start of the outer loop
+label OUTER_LOOP
+
+// Initialize inner counter at 3
+push constant 3
+pop local 1
+
+// Label for the start of the inner loop
+label INNER_LOOP
+
+// Check if inner counter == 1, if yes, break inner loop
+push local 1
+push constant 1
+eq
+if-goto INNER_BREAK
+
+// Otherwise continue inner loop: decrement inner counter
+push local 1
+push constant 1
+sub
+pop local 1
+
+// Unconditional jump to start of inner loop
+goto INNER_LOOP
+
+// Break point for inner loop
+label INNER_BREAK
+
+// Decrement outer counter
+push local 0
+push constant 1
+sub
+pop local 0
+
+// Check if outer counter >= -1, if yes, loop
+push local 0
+push constant -1
+gt
+if-goto OUTER_LOOP

@@ -1,0 +1,13 @@
+// CallTest01
+// Function that computes 1+2
+function ComputeSum 0
+push constant 1
+push constant 2
+add
+return
+
+// Main program
+function Main 0
+call ComputeSum 0
+return
+

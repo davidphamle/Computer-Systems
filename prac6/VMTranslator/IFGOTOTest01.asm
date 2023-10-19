@@ -1,5 +1,5 @@
-// Test file for IFGOTOTest02
-@0
+// Test file for IFGOTOTest01
+@1
 D=A
 @SP
 AM=M+1
@@ -12,7 +12,7 @@ D=M
 @not_zero
 D;JNE
 
-@3
+@0
 D=A
 @SP
 AM=M+1
@@ -21,7 +21,7 @@ M=D
 
 (not_zero)
 
-@4
+@2
 D=A
 @SP
 AM=M+1

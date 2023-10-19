@@ -1,0 +1,22 @@
+//FunctionTest02
+// Define a function 'AddLocalVars' with 2 local variables
+function AddLocalVars 2
+
+// Initialize the first local variable to 3
+push constant 3
+pop local 0
+
+// Initialize the second local variable to 4
+push constant 4
+pop local 1
+
+// Add the local variables and push the result
+push local 0
+push local 1
+add
+
+// Return from the function
+return
+
+// Main part of the program
+call AddLocalVars 0

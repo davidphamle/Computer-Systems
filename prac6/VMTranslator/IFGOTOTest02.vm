@@ -1,3 +1,15 @@
-//NotTest01 - Test not
-push constant 5
-not
+//IFGOTOTest02
+// Push 0 to stack
+push constant 0
+
+// If the top of the stack is not 0, go to NOT_ZERO
+if-goto NOT_ZERO
+
+// Push 3 to stack
+push constant 3
+
+// Label for not zero
+label NOT_ZERO
+
+// Push 4 to stack
+push constant 4

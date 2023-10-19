@@ -1,5 +1,39 @@
-// LABELTest01
+// LABELTest03
+// Initialize counter at 5
 push constant 5
-push constant 10
-add
+pop local 0  // Pop the initial value into the local variable
+
+// Label for the start of the loop
 label LOOP_START
+
+// Check if counter is even or odd
+push local 0
+push constant 2
+mod
+push constant 0
+eq
+if-goto EVEN
+
+// Counter is odd
+label ODD
+push constant 111 // Some value to represent odd
+goto CONTINUE
+
+// Counter is even
+label EVEN
+push constant 222 // Some value to represent even
+
+// Continue the loop
+label CONTINUE
+
+// Decrement counter
+push local 0
+push constant 1
+sub
+pop local 0
+
+// Check if counter >= -1, if yes, loop
+push local 0
+push constant -1
+gt
+if-goto LOOP_START

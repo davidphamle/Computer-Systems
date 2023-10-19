@@ -1,0 +1,12 @@
+//FunctionTest01
+// Define a function 'SimpleFunction' with 0 local variables
+function SimpleFunction 0
+
+// Inside the function: Push 9 onto the stack
+push constant 9
+
+// Return from the function
+return
+
+// Main part of the program
+call SimpleFunction 0

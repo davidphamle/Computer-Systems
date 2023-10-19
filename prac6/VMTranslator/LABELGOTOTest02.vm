@@ -1,5 +1,22 @@
-// LABELTest01
+// LABELTest02
+// Initialize counter at 5
 push constant 5
-push constant 10
-add
+pop local 0  // Pop the initial value into the local variable
+
+// Label for the start of the loop
 label LOOP_START
+
+// Push counter value onto the stack for the output
+push local 0
+
+// Decrement counter
+push local 0
+push constant 1
+sub
+pop local 0
+
+// Check if counter >= -1, if yes, loop
+push local 0
+push constant -1
+gt
+if-goto LOOP_START

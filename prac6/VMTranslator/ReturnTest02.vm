@@ -1,0 +1,21 @@
+// ReturnTest02
+// Function that adds 1 to the top of the stack
+function AddOne 0
+push constant 1
+add
+return
+
+// Function that adds 2 to the top of the stack by calling AddOne twice
+function AddTwo 0
+call AddOne 1
+call AddOne 1
+return
+
+// Main program starts here
+push constant 3
+call AddTwo 1
+return
+
+
+
+

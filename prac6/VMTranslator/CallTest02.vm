@@ -1,0 +1,23 @@
+// CallTest02
+// Function that increments a given value
+function Increment 1
+push local 0
+push constant 1
+add
+return
+
+// Function that doubles a given value
+function Double 1
+push local 0
+push local 0
+add
+return
+
+// Main program
+function Main 0
+push constant 5
+call Increment 1
+call Double 1
+return
+
+
